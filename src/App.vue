@@ -16,7 +16,7 @@
     </v-toolbar>
 
     <v-content>
-      <sign-in />
+      <sign-in v-if="this.$store.getters.isSignIn == false" />
     </v-content>
   </v-app>
 </template>
@@ -29,10 +29,5 @@ export default {
   components: {
     SignIn
   },
-  data () {
-    return {
-      //
-    }
-  }
 }
 </script>
