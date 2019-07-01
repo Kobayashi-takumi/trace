@@ -16,18 +16,11 @@
     </v-toolbar>
 
     <v-content>
-      <sign-in v-if="this.$store.getters.isSignIn == false" />
+      <router-view />
     </v-content>
   </v-app>
 </template>
 
 <script>
-import SignIn from './components/SignIn'
 
-export default {
-  name: 'App',
-  components: {
-    SignIn
-  },
-}
 </script>

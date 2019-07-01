@@ -5,6 +5,7 @@ import router from './router'
 import store from './store'
 import './plugins/firebase/firebase.js'
 import './plugins/firebase/firestore.js'
+import 'font-awesome/css/font-awesome.min.css' 
 
 Vue.config.productionTip = false
 
