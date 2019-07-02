@@ -2,22 +2,17 @@
     <div id="todo-view">
         <v-app>
             <v-container fluid>
-                <v-layout row>
-                    <v-flex xs12 sm6 offset-sm3>
+                <v-layout row justify-center>
+                    <v-flex xs12 sm6>
                         <v-card>
                             <v-toolbar color="light-blue" dark>
-                            <v-toolbar-side-icon></v-toolbar-side-icon>
 
-                            <v-toolbar-title>My files</v-toolbar-title>
+                            <v-toolbar-title>My Folders</v-toolbar-title>
 
                             <v-spacer></v-spacer>
 
                             <v-btn icon>
                                 <v-icon>search</v-icon>
-                            </v-btn>
-
-                            <v-btn icon>
-                                <v-icon>view_module</v-icon>
                             </v-btn>
                             </v-toolbar>
 
@@ -35,6 +30,7 @@
                                     <v-text-field
                                         label="New Folder"
                                         placeholder="Folder Name"
+                                        v-model="folderTitle"
                                     ></v-text-field>
                                     <v-btn flat icon color="indigo" @click="addFolder"><v-icon>create</v-icon></v-btn>
                                     </v-layout>
@@ -44,7 +40,7 @@
 
                             <v-list-tile
                                 v-for="task in tasks"
-                                :key="task.title"
+                                :key="task.id"
                                 avatar
                                 
                             >
@@ -58,15 +54,19 @@
                                 </v-list-tile-content>
 
                                 <v-list-tile-action>
-                                <v-btn icon ripple>
+                                <v-btn icon ripple @click="detailActive">
                                     <v-icon color="grey lighten-1">info</v-icon>
                                 </v-btn>
                                 </v-list-tile-action>
                             </v-list-tile>
-
                             </v-list>
                         </v-card>
                     </v-flex>
+
+                    <v-flex xs12 sm6 v-if='detailShow'>
+                        <to-do-detail/>
+                    </v-flex>
+
             </v-layout>
             </v-container>
         </v-app>
@@ -74,6 +74,7 @@
 </template>
 
 <script>
+import ToDoDetail from './ToDoDetail'
 
 export default {
     name: 'todo-view',
@@ -82,16 +83,26 @@ export default {
         return {
             isShow: false,
             folderTitle: '',
+            detailShow: false,
         }
     },
     methods: {
         addFolder() {
-            this.$emit('add-folder');
+            this.$emit('add-folder', this.folderTitle);
             this.folderTitle = '';
         },
         isActive() {
             this.isShow = !this.isShow;
+        },
+        detailActive() {
+            this.detailShow = !this.detailShow;
+        },
+        setFileData(data) {
+            this.$store.commit('setFileData', data);
         }
+    },
+    components: {
+        ToDoDetail,
     }
 }
 

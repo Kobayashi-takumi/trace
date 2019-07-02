@@ -8,6 +8,8 @@ export default new Vuex.Store({
     //login
     user: {},
     isSignIn: false,
+    //file
+    fileData: {},
   },
   mutations: {
     setUser(state, user) {
@@ -16,6 +18,9 @@ export default new Vuex.Store({
     setSignIn(state, isSignIn) {
       state.isSignIn = isSignIn;
     },
+    setFileData(state, fileData) {
+      state.fileData = fileData;
+    },
   },
   getters: {
     user(state) {
@@ -23,6 +28,9 @@ export default new Vuex.Store({
     },
     isSignIn(state){
       return state.isSignIn
+    },
+    fileData(state) {
+      return state.fileData
     },
   },
   actions: {
