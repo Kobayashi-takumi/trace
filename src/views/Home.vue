@@ -1,6 +1,6 @@
 <template>
   <div id="home">
-  <todo-view :tasks='tasks' @add-folder="addFolders"/>
+  <todo-view :tasks="tasks" @add-folder="addFolders"/>
   <sign-in v-if="this.$store.getters.isSignIn == false"/>
 
   </div>
@@ -27,8 +27,8 @@ export default {
     }
   },
   methods: {
-        getTask() {
-            let list = []
+    getTask() {
+      let list = []
             const task =db.collection('tasks')
             task.onSnapshot(querySnapshot => {
                 querySnapshot.forEach( doc => {
@@ -36,7 +36,6 @@ export default {
                         'id': doc.id,
                         'title': doc.data().title,
                         'created_at': doc.data().created_at,
-                        'detail': doc.data().detail,
                     }
                     list.push(data)
                 })
@@ -48,17 +47,17 @@ export default {
                 if( a > b ) return 1;
                 return 0; 
             });
-            this.tasks = list
-        },
-        addFolders(title) {
-          const task = db.collection('tasks')
-            task.add({
-                'title': title,
-                'created_at': Date.now(),
-            });
-        this.tasks = [];
-        this.getTask();
-        }
+      this.tasks = list
+    },
+    addFolders(title) {
+      const task = db.collection('tasks')
+        task.add({
+            'title': title,
+            'created_at': Date.now(),
+        });
+    this.tasks = [];
+    this.getTask();
+    }
   }
 }
 </script>

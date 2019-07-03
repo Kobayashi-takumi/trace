@@ -54,7 +54,7 @@
                                 </v-list-tile-content>
 
                                 <v-list-tile-action>
-                                <v-btn icon ripple @click="detailActive">
+                                <v-btn icon ripple @click="detailActive(); setFileData(task.id)">
                                     <v-icon color="grey lighten-1">info</v-icon>
                                 </v-btn>
                                 </v-list-tile-action>
@@ -66,7 +66,6 @@
                     <v-flex xs12 sm6 v-if='detailShow'>
                         <to-do-detail/>
                     </v-flex>
-
             </v-layout>
             </v-container>
         </v-app>
@@ -97,9 +96,9 @@ export default {
         detailActive() {
             this.detailShow = !this.detailShow;
         },
-        setFileData(data) {
-            this.$store.commit('setFileData', data);
-        }
+        setFileData(id) {
+            this.$store.commit('setFileId', id);
+        },
     },
     components: {
         ToDoDetail,

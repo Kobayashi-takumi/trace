@@ -20,17 +20,12 @@
                             <v-subheader inset>Files</v-subheader>
 
                             <v-list-tile
-                                v-for="item in items"
-                                :key="item.title"
+                                v-for="item in taskDetail"
+                                :key="item"
                                 avatar
                             >
-                                <v-list-tile-avatar>
-                                <v-icon :class="[item.iconClass]">{{ item.icon }}</v-icon>
-                                </v-list-tile-avatar>
-
                                 <v-list-tile-content>
                                 <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-                                <v-list-tile-sub-title>{{ item.subtitle }}</v-list-tile-sub-title>
                                 </v-list-tile-content>
 
                                 <v-list-tile-action>
@@ -48,8 +43,35 @@
 </template>
 
 <script>
+import db from '../plugins/firebase/firestore'
+
 export default {
     name: 'to-do-detail',
+    data() {
+        return {
+            taskDetail: [],
+        }
+    },
+    computed: {
+        folderId() {
+            return this.$store.getters.fileId 
+            }
+        },
+    created() {
+        let list = []
+        const task =db.collection('tasks').doc(this.folderId).collection('detail')
+        task.onSnapshot(querySnapshot => {
+            querySnapshot.forEach( doc => {
+                let data = {
+                    'id': doc.id,
+                    'title': doc.data().title,
+                    'memo': doc.data().memo
+                }
+                list.push(data)
+            })
+        })
+        this.taskDetail = list
+    }
 }
 </script>
 
